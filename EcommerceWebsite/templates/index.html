@@ -23,12 +23,12 @@
 
     <div class="container">
       <form class="form-signin" method="post" action="/login_action/" enctype="multipart/form-data">
-	  {% csrf_token %}
+<!--	  {% csrf_token %}-->
         <h2 class="form-signin-heading">我买网系统-----登录</h2>
         {{uf.as_p}}
           <p style="color:red">{{error}}</p> <br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button><br>
-		<a href="\register\">注册</a>
+		<a href="/user/register/">注册</a>
       </form>
 
     </div> <!-- /container -->
