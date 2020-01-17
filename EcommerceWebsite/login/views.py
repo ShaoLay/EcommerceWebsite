@@ -19,8 +19,9 @@ def login_action(request):
             else:
                 user = User.objects.filter(username=username, password=password)
                 if user:
-                    response = HttpResponseRedirect('/index/')
                     request.session['username'] = username
+                    print('我是：',request.session['username'])
+                    response = HttpResponseRedirect('/index/')
                     return response
                 else:
                     return render(request, 'login.html', {'uf':uf, "error":'用户名或密码错误'})

@@ -6,28 +6,6 @@ from django.shortcuts import render, render_to_response
 from user.forms import UserForm
 from user.models import User
 
-# def register(request):
-#     if request.method == 'POST':
-#         uf = UserForm(request.POST)
-#         if uf.is_valid():
-#             username = (request.POST.get('username')).strip()
-#             password = (request.POST.get('password')).strip()
-#             email = (request.POST.get('email')).strip()
-#             user_list = User.objects.filter(username=username)
-#             if user_list:
-#                 return render('register.html', {'uf':uf, "error":"用户名已经存在！"})
-#             else:
-#                 user = User()
-#                 user.username = username
-#                 user.password = password
-#                 user.email = email
-#                 user.save()
-#
-#                 return render_to_response('login.html', {'uf':uf})
-#         else:
-#             uf = UserForm()
-#         return render('register.html', {'uf':uf})
-
 def register(request):
     if request.method == 'POST':  # 判断表单是否提交状态
         uf = UserForm(request.POST)  # 判断表单变量
