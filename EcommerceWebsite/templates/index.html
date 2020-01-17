@@ -1,37 +1,70 @@
-{%load staticfiles%}
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "base.html" %}
+{% block content %}
+            <li class="active"><a href="/view_chart/">查看购物车<font color="#FF0000">{{ count }}</font></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+           <li><a href="/user_info/">{{user}}</a></li>
 
-    <title>电子商务系统-登录</title>
+           <li><a href="/logout/">退出</a></li>
+         </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{%static 'css/signin.css'%}" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="{%static 'css/bootstrap.min.css'%}" rel="stylesheet">
-	<link href="{%static 'css/my.css'%}" rel="stylesheet">
+    <div class="container theme-showcase" role="main">
 
-  </head>
+      <!--商品表单-->
+      <div class="page-header">
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form" method="post" action="/search_name/">
+            <div class="form-group">
+			{% csrf_token %}
+              <input name="good" type="text" placeholder="名称" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">搜索</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
 
-  <body>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>名称</th>
+                <th>价钱</th>
+				<th>查看详情</th>
+                <th>放入购物车</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for goods in goodss %}
+                <tr>
+                  <td>{{ goods.id }}</td>
+                  <td>{{ goods.name }}</td>
+                  <td>￥{{ goods.price }}</td>
+                  <td><a href="/view_goods/{{goods.id}}/">查看</a></td>
+                  <td><a href="/add_chart/{{goods.id}}/1/">放入</a></td>
+                </tr>
+             {% endfor %}
+            </tbody>
+          </table>
+        </div>
 
-    <div class="container">
-      <form class="form-signin" method="post" action="/login_action/" enctype="multipart/form-data">
-<!--	  {% csrf_token %}-->
-        <h2 class="form-signin-heading">我买网系统-----登录</h2>
-        {{uf.as_p}}
-          <p style="color:red">{{error}}</p> <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button><br>
-		<a href="/user/register/">注册</a>
-      </form>
-
-    </div> <!-- /container -->
-  </body>
-
-</html>
+      </div>
+ <!-- 列表分页器 -->
+    <div class="pagination">
+      <span class="step-links">
+        {% if goodss.has_previous %}
+          <a href="?page={{ goodss.previous_page_number }}">上一页</a>
+        {% endif %}
+          <span class="current">
+            Page {{ goodss.number }} of {{ goodss.paginator.num_pages }}.
+          </span>
+        {% if goodss.has_next %}
+          <a href="?page={{ goodss.next_page_number }}">下一页</a>
+        {% endif %}
+      </span>
+    </div>
+{% endblock %}

@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'', include('user.urls')),
     url(r'', include('index.urls')),
     url(r'', include('login.urls')),
+    url(r'', include('goods.urls')),
+
 ]
